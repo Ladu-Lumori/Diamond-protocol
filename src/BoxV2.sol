@@ -1,17 +1,22 @@
 // SPDX-License-Identifier: MIT
-
 pragma solidity ^0.8.19;
 
-contract BoxV2 {
+import {UUPSUpgradeable} from "@openzeppelin/contracts/proxy/utils/UUPSUpgradeable.sol";
+
+contract BoxV2 is UUPSUpgradeable{
     uint256 value;
 
-    function setValue(uint256 _value) external {}
+    function setValue(uint256 _value) external {
+        value = _value;
+    }
 
     function getValue() external view returns (uint256) {
         return value;
     }
 
-    function getVersion() external pure returns (uint256) {
-        return 1;
+    function version() external pure returns (uint256) {
+        return 2;
     }
+
+    function _authorizeUpgrade(address newImplementation) internal override {}
 }
